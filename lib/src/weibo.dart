@@ -123,11 +123,10 @@ class Weibo {
     Uri? imageUri,
   }) {
     assert(text == null || text.length <= 1024);
-    assert((imageData != null && imageData.lengthInBytes <= 2 * 1024 * 1024) ||
+    assert((imageData != null) ||
         (imageUri != null &&
             imageUri.isScheme(_SCHEME_FILE) &&
-            imageUri.toFilePath().length <= 512 &&
-            File.fromUri(imageUri).lengthSync() <= 10 * 1024 * 1024));
+            imageUri.toFilePath().length <= 512));
     return _channel.invokeMethod<void>(
       _METHOD_SHAREIMAGE,
       <String, dynamic>{
@@ -148,7 +147,6 @@ class Weibo {
   }) {
     assert(title.length <= 512);
     assert(description.isNotEmpty && description.length <= 1024);
-    assert(thumbData.lengthInBytes <= 32 * 1024);
     assert(webpageUrl.length <= 255);
     return _channel.invokeMethod<void>(
       _METHOD_SHAREWEBPAGE,
