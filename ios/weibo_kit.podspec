@@ -17,17 +17,32 @@ A powerful Flutter plugin allowing developers to auth/share with natvie Android 
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Your Company' => 'email@example.com' }
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
-  s.public_header_files = 'Classes/**/*.h'
+
   s.dependency 'Flutter'
   s.platform = :ios, '9.0'
+  
+  # 源文件
+  s.source_files = ['Classes/**/*.{h,m}', 'Weibo_SDK/**/*.{h,m}']
+  s.public_header_files = ['Classes/**/*.h', 'Weibo_SDK/**/*.h']
+  
+  # 添加静态库
+  s.vendored_libraries = 'Weibo_SDK/libWeiboSDK.a'
+  
+  # 资源文件
+  s.resources = ['Weibo_SDK/**/*.bundle', 'Weibo_SDK/**/*.xcprivacy']
 
-  # v3.3.0
   s.static_framework = true
-  s.subspec 'vendor' do |sp|
-    sp.dependency 'Weibo_SDK', '~> 3.3.0'
-  end
 
-  # Flutter.framework does not contain a i386 slice.
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
+  s.pod_target_xcconfig = { 
+    'DEFINES_MODULE' => 'YES', 
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386',
+    'HEADER_SEARCH_PATHS' => '"$(PODS_TARGET_SRCROOT)"',
+    'OTHER_LDFLAGS' => '-ObjC'
+  }
+
+  # 确保所有头文件都能被找到
+  s.xcconfig = {
+    'HEADER_SEARCH_PATHS' => '"$(PODS_TARGET_SRCROOT)"',
+    'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES'
+  }
 end
