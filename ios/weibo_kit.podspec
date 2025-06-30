@@ -45,4 +45,5 @@ A powerful Flutter plugin allowing developers to auth/share with natvie Android 
     'HEADER_SEARCH_PATHS' => '"$(PODS_TARGET_SRCROOT)"',
     'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES'
   }
+   s.resource_bundles = {'weibo_kit' => ['Resources/PrivacyInfo.xcprivacy']}
 end
